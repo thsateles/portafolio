@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio Reflexivo Integrador — Histología II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F4EC;
+    --paper-deep:#EEE9DC;
+    --ink:#1A1A1A;
+    --ink-soft:#4A4944;
+    --navy:#16324F;
+    --navy-deep:#0E2138;
+    --teal:#0E8C8A;
+    --teal-soft:#CFE8E6;
+    --wine:#7A2E3B;
+    --wine-soft:#F1DCE0;
+    --line:#D8D2C0;
+    --focus:#0E8C8A;
+    --shadow: 0 14px 34px -12px rgba(20,30,40,.28);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .label{
+    font-family:'Space Grotesk', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-weight:600;
+  }
+
+  a{color:inherit;}
+  :focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+
+  /* ============ TOP BAR ============ */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:var(--navy-deep);
+    color:#EFE9D8;
+    padding:14px 22px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+    border-bottom:3px solid var(--teal);
+  }
+  .topbar .brand{
+    display:flex; align-items:center; gap:12px;
+  }
+  .scope-dot{
+    width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fff, var(--teal) 55%, var(--navy) 100%);
+    box-shadow:0 0 0 3px rgba(14,140,138,.25);
+    flex-shrink:0;
+  }
+  .brand-text{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.78rem;
+    letter-spacing:.08em;
+    line-height:1.25;
+  }
+  .brand-text strong{font-size:1rem; letter-spacing:.02em; display:block; font-weight:700;}
+  .brand-text span{opacity:.65; font-size:.7rem;}
+  .topbar-meta{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.68rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    opacity:.7;
+    text-align:right;
+    display:none;
+  }
+  @media(min-width:720px){ .topbar-meta{display:block;} }
+
+  /* ============ LAYOUT ============ */
+  .shell{
+    display:flex;
+    max-width:1280px;
+    margin:0 auto;
+    min-height:calc(100vh - 60px);
+  }
+
+  /* ----- Sidebar / Guía práctica ----- */
+  .sidebar{
+    width:320px;
+    flex-shrink:0;
+    padding:28px 18px 60px 26px;
+    border-right:1px solid var(--line);
+  }
+  @media(max-width:980px){
+    .sidebar{display:none;}
+    .sidebar.open{
+      display:block;
+      position:fixed; inset:60px 0 0 0;
+      width:100%; height:calc(100vh - 60px);
+      background:var(--paper);
+      overflow-y:auto;
+      z-index:40;
+      padding:20px 20px 80px;
+      border-right:none;
+    }
+  }
+
+  .sidebar-head{
+    margin-bottom:22px;
+  }
+  .sidebar-head .eyebrow{
+    font-size:.66rem; color:var(--teal); margin-bottom:6px;
+  }
+  .sidebar-head h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.05rem;
+    font-weight:700;
+    margin:0 0 4px;
+    color:var(--navy-deep);
+    line-height:1.3;
+  }
+  .sidebar-head p{
+    font-size:.78rem;
+    color:var(--ink-soft);
+    margin:0;
+    line-height:1.5;
+  }
+
+  .nav-group{margin-bottom:4px;}
+  .nav-section-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.64rem;
+    color:var(--ink-soft);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    margin:22px 0 8px;
+    padding-left:2px;
+  }
+  .nav-group:first-of-type .nav-section-title{margin-top:6px;}
+
+  .nav-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    padding:9px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.82rem;
+    color:var(--ink);
+    line-height:1.35;
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-item:hover{background:var(--paper-deep);}
+  .nav-item.active{
+    background:var(--navy);
+    color:#fff;
+  }
+  .nav-item.active .nav-num{
+    border-color:#fff; color:#fff;
+  }
+  .nav-num{
+    flex-shrink:0;
+    width:22px; height:22px;
+    border-radius:50%;
+    border:1.5px solid var(--ink-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-size:.66rem;
+    margin-top:1px;
+    color:var(--ink-soft);
+  }
+  .nav-sub{
+    padding-left:30px;
+    font-size:.76rem;
+  }
+  .nav-sub .nav-item{padding:6px 8px; font-size:.76rem;}
+  .nav-sub .nav-num{width:18px; height:18px; font-size:.6rem;}
+
+  /* ----- Main content ----- */
+  .main{
+    flex:1;
+    min-width:0;
+    padding:36px 28px 100px;
+  }
+  @media(min-width:720px){ .main{padding:48px 56px 120px;} }
+
+  .mobile-nav-toggle{
+    display:none;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    padding:9px 14px;
+    border-radius:7px;
+    cursor:pointer;
+  }
+  @media(max-width:980px){ .mobile-nav-toggle{display:inline-flex; align-items:center; gap:8px;} }
+
+  /* ----- Panels (lâminas) ----- */
+  .panel{
+    display:none;
+    animation:slideIn .35s ease;
+  }
+  .panel.active{display:block;}
+
+  @keyframes slideIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .panel{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  .panel-eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.7rem;
+    letter-spacing:.14em;
+    color:var(--teal);
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .panel-eyebrow .slide-icon{
+    width:18px; height:18px;
+    border-radius:50%;
+    border:1.5px solid var(--teal);
+    position:relative;
+    flex-shrink:0;
+  }
+  .panel-eyebrow .slide-icon::after{
+    content:'';
+    position:absolute; inset:4px;
+    border-radius:50%;
+    background:var(--teal);
+    opacity:.35;
+  }
+
+  .panel h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(1.5rem, 3vw, 2.1rem);
+    color:var(--navy-deep);
+    margin:0 0 6px;
+    line-height:1.15;
+  }
+  .panel .panel-sub{
+    color:var(--ink-soft);
+    font-size:1.02rem;
+    font-style:italic;
+    margin:0 0 28px;
+    max-width:640px;
+    border-left:3px solid var(--teal-soft);
+    padding-left:14px;
+  }
+
+  .panel h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.12rem;
+    font-weight:600;
+    color:var(--navy);
+    margin:34px 0 12px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .panel h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.96rem;
+    font-weight:600;
+    color:var(--wine);
+    margin:22px 0 8px;
+  }
+  .panel p{
+    font-size:1.02rem;
+    line-height:1.72;
+    color:var(--ink);
+    margin:0 0 16px;
+    max-width:760px;
+  }
+  .panel ul, .panel ol{
+    max-width:760px;
+    padding-left:22px;
+    margin:0 0 18px;
+  }
+  .panel li{
+    font-size:1rem;
+    line-height:1.65;
+    margin-bottom:9px;
+  }
+  .panel strong{color:var(--navy-deep); font-weight:600;}
+  .panel em{color:var(--wine);}
+
+  /* callout box - dificultades / estrategias */
+  .box-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    max-width:780px;
+    margin:18px 0 26px;
+  }
+  @media(min-width:680px){ .box-row{grid-template-columns:1fr 1fr;} }
+  .box{
+    background:var(--paper-deep);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 18px;
+  }
+  .box.dificultad{border-left:4px solid var(--wine);}
+  .box.estrategia{border-left:4px solid var(--teal);}
+  .box-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  .box.dificultad .box-title{color:var(--wine);}
+  .box.estrategia .box-title{color:var(--teal);}
+  .box ul{margin:0; padding-left:18px;}
+  .box li{font-size:.92rem; margin-bottom:7px; line-height:1.5;}
+
+  /* clinical correlation tag */
+  .clinic-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--wine-soft);
+    color:var(--wine);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.68rem;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    font-weight:700;
+    padding:4px 10px;
+    border-radius:20px;
+    margin:4px 6px 4px 0;
+  }
+
+  /* quote block - reflexión */
+  .reflexion{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color:#EFE9D8;
+    border-radius:12px;
+    padding:22px 24px;
+    margin:24px 0;
+    max-width:780px;
+    box-shadow:var(--shadow);
+  }
+  .reflexion .box-title{color:var(--teal-soft); margin-bottom:10px;}
+  .reflexion p{color:#EFE9D8; margin-bottom:0;}
+  .reflexion p + p{margin-top:14px;}
+
+  /* sub-card grid for 2.1.x labs and analysis 3.x */
+  .subnav-grid{
+    display:grid;
+    gap:10px;
+    grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+    max-width:840px;
+    margin:18px 0 6px;
+  }
+  .subcard{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    cursor:pointer;
+    text-align:left;
+    font-family:'Space Grotesk', sans-serif;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .subcard:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow);
+    border-color:var(--teal);
+  }
+  .subcard .sc-num{
+    font-size:.66rem; color:var(--teal); letter-spacing:.1em; font-weight:700;
+  }
+  .subcard .sc-title{
+    font-size:.88rem; color:var(--navy-deep); font-weight:600; margin-top:4px; line-height:1.3;
+  }
+
+  /* references */
+  .ref-list{
+    max-width:820px;
+    font-size:.86rem;
+    line-height:1.7;
+    color:var(--ink-soft);
+    padding-left:0;
+  }
+  .ref-list li{
+    list-style:none;
+    padding-left:0;
+    margin-bottom:14px;
+    padding-bottom:0;
+  }
+  .ref-list a{color:var(--teal); text-decoration:underline;}
+
+  /* table */
+  .htable{
+    width:100%;
+    max-width:780px;
+    border-collapse:collapse;
+    margin:18px 0 26px;
+    font-size:.9rem;
+  }
+  .htable th, .htable td{
+    border:1px solid var(--line);
+    padding:9px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  .htable th{
+    background:var(--navy);
+    color:#fff;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:.78rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .htable tr:nth-child(even) td{background:var(--paper-deep);}
+
+  /* footer nav controls between panels */
+  .panel-footer-nav{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:48px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    max-width:780px;
+  }
+  .pf-btn{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.78rem;
+    letter-spacing:.04em;
+    background:none;
+    border:1.5px solid var(--navy);
+    color:var(--navy);
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    display:flex; align-items:center; gap:8px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .pf-btn:hover{background:var(--navy); color:#fff;}
+  .pf-btn.disabled{opacity:.3; pointer-events:none;}
+
+  /* intro panel hero */
+  .hero{
+    position:relative;
+    margin-bottom:8px;
+  }
+  .hero-eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.74rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(1.9rem,4.2vw,3rem);
+    color:var(--navy-deep);
+    line-height:1.08;
+    margin:0 0 18px;
+    max-width:780px;
+  }
+  .hero h1 em{
+    color:var(--teal);
+    font-style:normal;
+  }
+  .hero-lede{
+    font-size:1.12rem;
+    line-height:1.7;
+    color:var(--ink-soft);
+    max-width:680px;
+    margin-bottom:30px;
+  }
+  .hero-meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 28px;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.78rem;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:16px 0;
+    max-width:780px;
+    margin-bottom:36px;
+  }
+  .hero-meta-row div strong{
+    display:block; color:var(--navy-deep); font-size:.92rem; margin-top:2px;
+  }
+
+  .integrantes-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+    gap:10px;
+    max-width:780px;
+    margin-bottom:10px;
+  }
+  .integrante-chip{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.82rem;
+    color:var(--navy-deep);
+  }
+
+  /* scrollbar */
+  .sidebar::-webkit-scrollbar{width:7px;}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--line); border-radius:8px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <button class="mobile-nav-toggle" id="navToggle" aria-expanded="false" aria-controls="sidebar">☰ Índice</button>
+    <div class="scope-dot" aria-hidden="true"></div>
+    <div class="brand-text">
+      <strong>Portafolio Reflexivo Integrador</strong>
+      <span>Histología II · UPDS</span>
+    </div>
+  </div>
+  <div class="topbar-meta">Dra. Patricia Arias · Medicina, Semestre 02</div>
+</div>
+
+<div class="shell">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <nav class="sidebar" id="sidebar" aria-label="Índice del portafolio">
+    <div class="sidebar-head">
+      <div class="eyebrow label" style="color:var(--teal);">Guía de navegación</div>
+      <h1>Índice de contenidos</h1>
+      <p>Hacé clic en cualquier sección para abrir la lámina correspondiente.</p>
+    </div>
+
+    <div class="nav-group">
+      <button class="nav-item active" data-target="panel-intro"><span class="nav-num">·</span> Portada</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section-title">1 · Introducción reflexiva</div>
+      <button class="nav-item" data-target="panel-1-1"><span class="nav-num">1.1</span> Histología II en la formación médica</button>
+      <button class="nav-item" data-target="panel-1-2"><span class="nav-num">1.2</span> Relación con el problema de contexto</button>
+      <button class="nav-item" data-target="panel-1-3"><span class="nav-num">1.3</span> Objetivos personales de aprendizaje</button>
+      <button class="nav-item" data-target="panel-1-4"><span class="nav-num">1.4</span> Recorrido pedagógico</button>
+      <button class="nav-item" data-target="panel-1-5"><span class="nav-num">1.5</span> Síntesis de contenidos teóricos</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section-title">2 · Evidencias del semestre</div>
+      <button class="nav-item" data-target="panel-2-1"><span class="nav-num">2.1</span> Práctica de laboratorio</button>
+      <button class="nav-item" data-target="panel-2-2"><span class="nav-num">2.2</span> Patología del tubo digestivo</button>
+      <button class="nav-item" data-target="panel-2-5"><span class="nav-num">2.5</span> Flashcards · Sist. respiratorio</button>
+      <button class="nav-item" data-target="panel-2-6"><span class="nav-num">2.6</span> Guía práctica de laboratorio</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section-title">3 · Análisis integrador</div>
+      <button class="nav-item" data-target="panel-3-1"><span class="nav-num">3.1</span> Hígado</button>
+      <button class="nav-item" data-target="panel-3-2"><span class="nav-num">3.2</span> Páncreas endocrino</button>
+      <button class="nav-item" data-target="panel-3-3"><span class="nav-num">3.3</span> Riñón</button>
+      <button class="nav-item" data-target="panel-3-4"><span class="nav-num">3.4</span> Intestino delgado</button>
+      <button class="nav-item" data-target="panel-3-5"><span class="nav-num">3.5</span> Glándula suprarrenal</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section-title">4 · Reflexión ética y profesional</div>
+      <button class="nav-item" data-target="panel-4-1"><span class="nav-num">4.1</span> Interpretar lo invisible</button>
+      <button class="nav-item" data-target="panel-4-2"><span class="nav-num">4.2</span> Honestidad académica</button>
+      <button class="nav-item" data-target="panel-4-3"><span class="nav-num">4.3</span> Aprendizaje permanente</button>
+      <button class="nav-item" data-target="panel-4-4"><span class="nav-num">4.4</span> Histología y justicia sanitaria</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section-title">5 · Uso de inteligencia artificial</div>
+      <button class="nav-item" data-target="panel-5"><span class="nav-num">5</span> Declaración y validación</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section-title">6 · Conclusión</div>
+      <button class="nav-item" data-target="panel-6"><span class="nav-num">6</span> Síntesis y cierre</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section-title">7 · Referencias</div>
+      <button class="nav-item" data-target="panel-7"><span class="nav-num">7</span> Bibliografía APA 7</button>
+    </div>
+  </nav>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main" id="main">
+
+    <!-- PORTADA -->
+    <section class="panel active" id="panel-intro">
+      <div class="hero">
+        <div class="hero-eyebrow">Facultad de Ciencias de la Salud · Medicina</div>
+        <h1>Leer los tejidos:<br><em>un semestre de Histología II</em></h1>
+        <p class="hero-lede">Portafolio reflexivo integrador que documenta el recorrido de aprendizaje a lo largo del semestre — desde el reconocimiento microscópico en el laboratorio hasta la correlación histología–función–clínica aplicada a la realidad sanitaria de Bolivia.</p>
+        <div class="hero-meta-row">
+          <div>Docente<strong>Dra. Patricia Arias Flores</strong></div>
+          <div>Carrera<strong>Medicina — Semestre 02</strong></div>
+          <div>Universidad<strong>UPDS, Santa Cruz de la Sierra</strong></div>
+        </div>
+        <h3 style="margin-top:0;">Integrantes</h3>
+        <div class="integrantes-grid">
+          <div class="integrante-chip">Fernanda Banegas A. Guevara</div>
+          <div class="integrante-chip">Maysa Rabelo</div>
+          <div class="integrante-chip">Rhayana Santana</div>
+          <div class="integrante-chip">Rudson Guevara Dias</div>
+          <div class="integrante-chip">Thiago Teles</div>
+        </div>
+      </div>
+
+      <div class="reflexion">
+        <div class="box-title label">De qué se trata este portafolio</div>
+        <p>Un corte histológico no es simplemente una imagen: es un relato celular que habla de función, de adaptación y, cuando algo falla, de enfermedad. Este portafolio reúne seis evidencias del semestre — prácticas de laboratorio, informes grupales, flashcards y la guía práctica — junto a un análisis integrador y una reflexión ética sobre lo que significa formarse como médico en el contexto sanitario boliviano.</p>
+      </div>
+
+      <div class="subnav-grid" style="margin-top:30px;">
+        <button class="subcard" data-target="panel-1-1"><div class="sc-num">SECCIÓN 1</div><div class="sc-title">Introducción reflexiva →</div></button>
+        <button class="subcard" data-target="panel-2-1"><div class="sc-num">SECCIÓN 2</div><div class="sc-title">Evidencias seleccionadas →</div></button>
+        <button class="subcard" data-target="panel-3-1"><div class="sc-num">SECCIÓN 3</div><div class="sc-title">Análisis integrador →</div></button>
+        <button class="subcard" data-target="panel-4-1"><div class="sc-num">SECCIÓN 4</div><div class="sc-title">Reflexión ética →</div></button>
+        <button class="subcard" data-target="panel-5"><div class="sc-num">SECCIÓN 5</div><div class="sc-title">Uso de IA →</div></button>
+        <button class="subcard" data-target="panel-6"><div class="sc-num">SECCIÓN 6</div><div class="sc-title">Conclusión →</div></button>
+      </div>
+    </section>
+
+    <!-- ============ 1.1 ============ -->
+    <section class="panel" id="panel-1-1">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 1.1 · Introducción reflexiva</div>
+      <h2>La Histología II en el contexto de la formación médica</h2>
+      <p class="panel-sub">Aprender a "leer" los tejidos como puente entre la morfología y la clínica.</p>
+
+      <p>La Histología II constituye uno de los pilares fundamentales en la formación preclínica del médico. A diferencia de la Histología I, que introduce al estudiante en los tejidos básicos, la Histología II profundiza en la microanatomía de órganos y sistemas complejos: el aparato digestivo, el sistema endocrino, el sistema urinario, el sistema reproductor y el aparato cardiovascular. Esta progresión no es arbitraria; responde a la necesidad de construir un lenguaje morfológico que permita, posteriormente, comprender la fisiopatología de las enfermedades y desarrollar competencias diagnósticas.</p>
+
+      <p>Estudiar Histología II significa aprender a <strong>"leer" los tejidos</strong>. Un corte histológico no es simplemente una imagen: es un relato celular que habla de función, de adaptación y, cuando algo falla, de enfermedad. Reconocer los hepatocitos con su disposición en trabéculas, identificar los islotes de Langerhans en el páncreas, distinguir el glomérulo renal o los túbulos contorneados proximal y distal son competencias que, en años clínicos, permitirán correlacionar resultados de biopsia con diagnósticos definitivos.</p>
+
+      <p>En este sentido, la asignatura no es un fin en sí misma, sino un <em>puente entre la morfología y la clínica</em>. Cada estructura microscópica aprendida durante el semestre tiene una proyección directa en la práctica médica futura.</p>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn disabled">← Anterior</button>
+        <button class="pf-btn" data-target="panel-1-2">Siguiente: Problema de contexto →</button>
+      </div>
+    </section>
+
+    <!-- ============ 1.2 ============ -->
+    <section class="panel" id="panel-1-2">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 1.2 · Introducción reflexiva</div>
+      <h2>Relación con el problema de contexto</h2>
+      <p class="panel-sub">Histología aplicada a la transición epidemiológica de Bolivia.</p>
+
+      <p>El problema de contexto que orienta la carrera de Medicina en la UPDS invita a reflexionar sobre la realidad sanitaria de Bolivia y la responsabilidad social del médico que se forma en este contexto. Santa Cruz de la Sierra, como principal polo urbano del país, enfrenta una transición epidemiológica compleja: persisten enfermedades infecciosas y parasitarias, pero al mismo tiempo se incrementan las enfermedades crónicas no transmisibles como la diabetes mellitus tipo 2, las hepatopatías y las nefropatías crónicas.</p>
+
+      <p>La Histología II se vincula directamente con esta realidad. Comprender la histología del páncreas endocrino es comprender las bases morfológicas de la diabetes; entender la arquitectura del hígado permite interpretar la progresión de la fibrosis hepática; conocer la microanatomía renal facilita la comprensión del daño glomerular por hipertensión arterial o diabetes. En una región con alta prevalencia de estas patologías, el conocimiento histológico no es abstracto: es <strong>clínicamente urgente</strong>.</p>
+
+      <p>Además, en un sistema de salud con recursos diagnósticos limitados, el médico que comprende la histopatología puede interpretar mejor los informes de biopsia, correlacionar hallazgos clínicos con alteraciones estructurales y tomar decisiones terapéuticas más informadas.</p>
+
+      <span class="clinic-tag">Diabetes mellitus tipo 2</span>
+      <span class="clinic-tag">Hepatopatías</span>
+      <span class="clinic-tag">Nefropatías crónicas</span>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-1-1">← Anterior</button>
+        <button class="pf-btn" data-target="panel-1-3">Siguiente: Objetivos personales →</button>
+      </div>
+    </section>
+
+    <!-- ============ 1.3 ============ -->
+    <section class="panel" id="panel-1-3">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 1.3 · Introducción reflexiva</div>
+      <h2>Objetivos personales de aprendizaje</h2>
+      <p class="panel-sub">Lo que me propuse al iniciar el semestre.</p>
+
+      <ul>
+        <li>Dominar la identificación microscópica de los tejidos de los sistemas trabajados, especialmente hígado, páncreas, riñón y sistema reproductor.</li>
+        <li>Desarrollar la capacidad de correlacionar la estructura histológica con la función fisiológica de cada órgano.</li>
+        <li>Adquirir herramientas de razonamiento clínico básico a partir de casos histopatológicos, como primer paso hacia el diagnóstico diferencial.</li>
+        <li>Fortalecer hábitos de estudio que integren la visualización microscópica con la comprensión funcional y clínica.</li>
+        <li>Reflexionar críticamente sobre mi proceso de aprendizaje, identificando fortalezas y debilidades para mejorar de forma continua.</li>
+      </ul>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-1-2">← Anterior</button>
+        <button class="pf-btn" data-target="panel-1-4">Siguiente: Recorrido pedagógico →</button>
+      </div>
+    </section>
+
+    <!-- ============ 1.4 ============ -->
+    <section class="panel" id="panel-1-4">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 1.4 · Introducción reflexiva</div>
+      <h2>Recorrido pedagógico de la asignatura</h2>
+      <p class="panel-sub">Teoría y laboratorio, unidad por unidad, a lo largo del semestre.</p>
+
+      <p>A lo largo del semestre, la asignatura de Histología II se desarrolló siguiendo una planificación progresiva que abarcó, en orden, el sistema respiratorio, el sistema digestivo (dividido en tres unidades: cavidad bucal y glándulas salivales; esófago, estómago e intestino; hígado, páncreas y vesícula biliar), el sistema urinario, el sistema endocrino, el sistema genital femenino y masculino, el sistema nervioso y, finalmente, el sistema tegumentario. Esta secuencia no fue arbitraria: avanzó desde sistemas de arquitectura relativamente simple hacia sistemas de mayor complejidad histofuncional, intercalando dos valoraciones parciales y una valoración final con defensa de un proyecto de investigación.</p>
+
+      <p>La metodología de enseñanza combinó, en cada unidad, una clase teórica y una sesión práctica de laboratorio, ambas impartidas por la Dra. Patricia Arias Flores. En las clases teóricas, la docente desarrolló los contenidos mediante diapositivas elaboradas a partir del libro de referencia de la asignatura, <em>Histología. Texto y Atlas</em>, de Ross y Pawlina (2020), explicando la arquitectura microscópica de cada órgano, sus capas constitutivas, los tipos celulares específicos y la correlación funcional y clínica correspondiente. En las clases prácticas, la misma docente guio personalmente la observación de las preparaciones histológicas en el microscopio.</p>
+
+      <div class="reflexion">
+        <div class="box-title label">Estrategia pedagógica</div>
+        <p>Teoría basada en un texto de referencia validado científicamente, seguida inmediatamente de práctica de laboratorio guiada por la misma docente: esta combinación fue la que permitió la integración progresiva entre conocimiento teórico, análisis microscópico y razonamiento clínico que este portafolio busca documentar.</p>
+      </div>
+
+      <p>Las flashcards del sistema respiratorio corresponden a las primeras semanas del semestre; los informes grupales sobre patología digestiva se ubican en la unidad de Sistema Digestivo III; y el llenado continuo de la guía práctica de laboratorio acompañó transversalmente todas las unidades, desde el sistema respiratorio hasta el sistema tegumentario.</p>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-1-3">← Anterior</button>
+        <button class="pf-btn" data-target="panel-1-5">Siguiente: Síntesis de contenidos →</button>
+      </div>
+    </section>
+
+    <!-- ============ 1.5 ============ -->
+    <section class="panel" id="panel-1-5">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 1.5 · Introducción reflexiva</div>
+      <h2>Síntesis de los contenidos teóricos desarrollados en clase</h2>
+      <p class="panel-sub">Unidad por unidad, lo que efectivamente aprendí en cada clase teórica de la Dra. Patricia Arias Flores, a partir de Ross y Pawlina (2020).</p>
+
+      <h3>1.5.1 — Aparato respiratorio</h3>
+      <p>Fue la primera unidad del semestre y, en retrospectiva, la que me dio el "lenguaje base" para todo lo demás: aprendí a diferenciar la porción conductora (cavidades nasales, laringe, tráquea y bronquios), revestida por epitelio cilíndrico seudoestratificado ciliado encargado del acondicionamiento del aire, de la porción respiratoria (bronquiolos y alvéolos), donde el epitelio se adelgaza hasta el neumocito tipo I para permitir el intercambio gaseoso. Comprender el barrido mucociliar y el papel del surfactante producido por los neumocitos tipo II me ayudó después a entender por qué su ausencia en el prematuro genera el síndrome de dificultad respiratoria neonatal.</p>
+      <span class="clinic-tag">Rinitis</span><span class="clinic-tag">Metaplasia escamosa (fumadores)</span><span class="clinic-tag">Fibrosis quística</span><span class="clinic-tag">Neumonía bacteriana</span>
+
+      <h3>1.5.2 — Sistema digestivo I: cavidad bucal y glándulas salivales</h3>
+      <p>Trabajamos la mucosa masticatoria, de revestimiento y especializada, la histofisiología de las papilas linguales y los botones gustativos —incluyendo el mecanismo bioquímico de cada sabor, desde los receptores T1R y T2R hasta la despolarización por canales de Na y Ca—, y la histogénesis del diente (amelogénesis, dentinogénesis y cementogénesis). Lo que más me marcó fue entender que la cavidad bucal no es solo la "puerta de entrada" del alimento, sino una mucosa con función inmunitaria activa (IgA secretora, defensinas) y un sitio de absorción de fármacos.</p>
+      <span class="clinic-tag">Caries dental</span><span class="clinic-tag">Síndrome de Sjögren primario</span><span class="clinic-tag">Adenoma pleomorfo</span>
+
+      <h3>1.5.3 — Sistema digestivo II: esófago, estómago e intestino</h3>
+      <p>Comprendí que el tubo digestivo, a pesar de mantener una organización constante en cuatro capas (mucosa, submucosa, muscular externa y serosa o adventicia), modifica radicalmente su histología región por región según la función que cumple. En el estómago, las glándulas fúndicas —con sus células parietales productoras de ácido clorhídrico y factor intrínseco, y sus células principales secretoras de pepsinógeno— transforman el epitelio cilíndrico simple en una verdadera fábrica de digestión química. En el intestino delgado, las células de Paneth actúan como guardianas de la microbiota.</p>
+      <span class="clinic-tag">Reflujo gastroesofágico</span><span class="clinic-tag">Estenosis pilórica hipertrófica</span><span class="clinic-tag">Cáncer colorrectal</span>
+
+      <h3>1.5.5 — Sistema digestivo III: hígado, vesícula biliar y páncreas</h3>
+      <p>Esta unidad teórica fue la base directa de la práctica de laboratorio documentada en la sección 2.1. Aprendí que el hígado puede describirse desde tres perspectivas complementarias —el lobulillo clásico, centrado en la vena central; el lobulillo portal, con eje en el conducto biliar; y el acino hepático, que divide a los hepatocitos en zonas 1, 2 y 3 según su distancia de la sangre oxigenada— y que esta zonación explica por qué la insuficiencia cardíaca congestiva o una sobredosis de paracetamol generan específicamente necrosis centrolobulillar en la zona 3. Las células de Kupffer y la célula estrellada hepática (de Ito) me permitieron entender al hígado como un órgano inmunológico y de depósito de vitamina A.</p>
+      <span class="clinic-tag">Necrosis centrolobulillar</span><span class="clinic-tag">Litiasis biliar</span><span class="clinic-tag">Diabetes mellitus tipo 1</span><span class="clinic-tag">Alzheimer (resistencia a insulina)</span>
+
+      <h3>1.5.4 — Sistema endocrino</h3>
+      <p>Fue la unidad más "integradora" del semestre, porque obligó a pensar en ejes de regulación y no en órganos aislados. Recorrimos el eje hipotálamo-hipófisis, la glándula pineal y el ritmo circadiano, la tiroides (folículo tiroideo, síntesis de T3/T4 y calcitonina) y las glándulas paratiroides y suprarrenales con su subdivisión en zona glomerular, fasciculada y reticular. Esta unidad dialogó directamente con mi proyecto de investigación sobre obesidad en estudiantes universitarios.</p>
+      <span class="clinic-tag">Hipotiroidismo</span><span class="clinic-tag">Enfermedad de Graves</span><span class="clinic-tag">Diabetes insípida</span>
+
+      <h3>1.5.6 — Aparato urinario</h3>
+      <p>El corpúsculo renal y su aparato de filtración —con las fenestraciones del endotelio glomerular, la membrana basal glomerular y los podocitos con sus pedicelos— me mostraron una barrera de una precisión asombrosa, cuya alteración genética (síndrome de Alport) o autoinmunitaria (síndrome de Goodpasture) puede comprometer simultáneamente al riñón y al pulmón. El aparato yuxtaglomerular y el sistema renina-angiotensina-aldosterona conectaron directamente la histología renal con la regulación de la presión arterial.</p>
+      <span class="clinic-tag">Síndrome de Alport</span><span class="clinic-tag">Síndrome de Goodpasture</span><span class="clinic-tag">Hipertensión arterial</span><span class="clinic-tag">Nefropatía diabética</span>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-1-4">← Anterior</button>
+        <button class="pf-btn" data-target="panel-2-1">Siguiente: Sección 2 — Evidencias →</button>
+      </div>
+    </section>
+
+    <!-- ============ 2.1 PRACTICA LAB (con sub-tabs) ============ -->
+    <section class="panel" id="panel-2-1">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 2.1 · Evidencias del semestre</div>
+      <h2>Práctica de laboratorio: identificación microscópica en los sistemas estudiados</h2>
+      <p class="panel-sub">Seis sesiones guiadas personalmente por la Dra. Patricia Arias Flores, con preparaciones histológicas del banco de la cátedra.</p>
+
+      <p>A lo largo del semestre, cada unidad teórica fue acompañada de una sesión práctica de laboratorio en la que trabajamos con preparaciones histológicas del banco de la cátedra, identificando a diferentes aumentos del microscopio óptico las estructuras correspondientes a cada sistema. A continuación, una síntesis reflexiva de cada una de estas seis sesiones — hacé clic para abrir cada una:</p>
+
+      <div class="subnav-grid">
+        <button class="subcard" data-subtarget="lab-resp"><div class="sc-num">2.1.1</div><div class="sc-title">Aparato respiratorio</div></button>
+        <button class="subcard" data-subtarget="lab-sd1"><div class="sc-num">2.1.2</div><div class="sc-title">Sist. digestivo I — boca y glándulas</div></button>
+        <button class="subcard" data-subtarget="lab-sd2"><div class="sc-num">2.1.3</div><div class="sc-title">Sist. digestivo II — esófago, estómago, intestino</div></button>
+        <button class="subcard" data-subtarget="lab-sd3"><div class="sc-num">2.1.4</div><div class="sc-title">Sist. digestivo III — hígado, vesícula, páncreas</div></button>
+        <button class="subcard" data-subtarget="lab-end"><div class="sc-num">2.1.5</div><div class="sc-title">Sistema endocrino</div></button>
+        <button class="subcard" data-subtarget="lab-uri"><div class="sc-num">2.1.6</div><div class="sc-title">Aparato urinario</div></button>
+      </div>
+
+      <div id="lab-resp" class="sublab" style="display:none;">
+        <h3>2.1.1 — Aparato respiratorio</h3>
+        <p>La práctica del sistema respiratorio fue mi primera experiencia real distinguiendo epitelios bajo el microscopio. Identificar el epitelio cilíndrico seudoestratificado ciliado de la tráquea, con sus células caliciformes intercaladas, y compararlo con el epitelio plano simple de los alvéolos pulmonares —reducido al espesor mínimo necesario para el intercambio gaseoso— me hizo entender de forma muy concreta el principio de que "la forma sigue a la función" en histología.</p>
+        <div class="box-row">
+          <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+            <li>Diferenciar bronquiolo terminal de bronquiolo respiratorio en cortes donde el epitelio se adelgaza progresivamente.</li>
+            <li>Ubicar los neumocitos tipo II entre los tipo I, dada su escasa proporción numérica pese a su gran superficie.</li>
+          </ul></div>
+          <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+            <li>Comparación sistemática lámina–atlas con Ross & Pawlina (2020) antes de cada sesión.</li>
+            <li>Elaboración de un esquema propio de "transición epitelial" desde la tráquea hasta el alvéolo.</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div id="lab-sd1" class="sublab" style="display:none;">
+        <h3>2.1.2 — Sistema digestivo I: cavidad bucal y glándulas salivales</h3>
+        <p>Trabajamos preparaciones de lengua y de las tres glándulas salivales mayores. Lo que más trabajo me costó fue diferenciarlas entre sí, dado que comparten un patrón acinar seroso/mucoso pero en proporciones distintas según la glándula.</p>
+        <div class="box-row">
+          <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+            <li>Distinguir acinos serosos (parótida) de acinos mucosos y mixtos (submandibular, sublingual) en cortes con tinción H&E.</li>
+            <li>Reconocer las papilas caliciformes de la lengua y sus botones gustativos.</li>
+          </ul></div>
+          <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+            <li>Elaboración de una tabla comparativa de las tres glándulas según su tipo de secreción.</li>
+            <li>Repaso guiado fotografía–microscopio junto con la docente durante la misma sesión.</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div id="lab-sd2" class="sublab" style="display:none;">
+        <h3>2.1.3 — Sistema digestivo II: esófago, estómago e intestino</h3>
+        <p>Esta práctica me permitió ver en vivo la transición epitelial que después profundizaría en la teoría: el epitelio plano estratificado del esófago cambiando abruptamente al cilíndrico simple de las criptas gástricas, y de ahí a las vellosidades del intestino delgado.</p>
+        <div class="box-row">
+          <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+            <li>Diferenciar las regiones gástricas (cardial, fúndica, pilórica) en cortes pequeños sin orientación anatómica previa.</li>
+            <li>Identificar las células de Paneth en la base de las criptas intestinales por su escasa tinción diferencial.</li>
+          </ul></div>
+          <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+            <li>Uso de fotografías propias del microscopio, anotadas y comparadas con las imágenes de Ross & Pawlina (2020).</li>
+            <li>Discusión grupal posterior a la práctica para confirmar identificaciones dudosas.</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div id="lab-sd3" class="sublab" style="display:none;">
+        <h3>2.1.4 — Sistema digestivo III: hígado, vesícula biliar y páncreas</h3>
+        <p>El laboratorio del hígado fue, sin duda, uno de los momentos de mayor aprendizaje del semestre. Cuando observé por primera vez una preparación de tejido hepático, me costó orientarme: todo parecía una maraña uniforme de células. Fue la guía docente y la lectura previa de Ross & Pawlina (2020) lo que me permitió identificar el espacio porta, la vena centrolobulillar y las trabéculas de hepatocitos. La transición de "ver células" a "leer arquitectura tisular" fue un punto de inflexión en mi proceso de aprendizaje.</p>
+        <p>En el páncreas, la distinción entre la porción exocrina (acinos serosos) y los islotes de Langerhans fue inicialmente difícil: los islotes se presentan como islas de células más pequeñas y pálidas rodeadas de tejido exocrino densamente basófilo. Comprender que estas estructuras son responsables de la homeostasis glucémica —y que su destrucción autoinmune genera diabetes mellitus tipo 1— le dio un peso clínico completamente diferente a lo que observaba en el microscopio.</p>
+        <div class="box-row">
+          <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+            <li>Distinguir el lobulillo clásico del lobulillo portal y el ácino de Rappaport en preparaciones de hígado.</li>
+            <li>Identificar los tipos celulares de los islotes (alfa, beta, delta) en microscopía óptica convencional.</li>
+            <li>Correlacionar la vesícula biliar con el ciclo enterohepático.</li>
+          </ul></div>
+          <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+            <li>Flashcards con imágenes histológicas anotadas y preguntas de razonamiento clínico.</li>
+            <li>Revisión complementaria de atlas histológico digital (Junqueira & Carneiro, 2015).</li>
+            <li>Estudio en grupo con Dyones Cleve, Jerônimo Sperandio y Teresa Bonino (Grupo A).</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div id="lab-end" class="sublab" style="display:none;">
+        <h3>2.1.5 — Sistema endocrino</h3>
+        <p>La práctica de glándulas endocrinas (tiroides, paratiroides, suprarrenal e hipófisis) fue particularmente desafiante porque, a diferencia del tubo digestivo, estas glándulas no tienen una luz central que oriente la lectura del corte. Identificar los folículos tiroideos con su coloide y el epitelio cuboideo circundante me costó al inicio, pero una vez reconocido el patrón se volvió muy reconocible en cualquier preparación posterior.</p>
+        <div class="box-row">
+          <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+            <li>Diferenciar las tres zonas de la corteza suprarrenal (glomerular, fasciculada y reticular) por gradientes sutiles.</li>
+            <li>Ubicar las células C (parafoliculares), productoras de calcitonina, entre los folículos tiroideos.</li>
+          </ul></div>
+          <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+            <li>Asociación mnemotécnica entre cada zona cortical suprarrenal y su hormona correspondiente.</li>
+            <li>Sesión adicional de repaso grupal usando láminas digitalizadas.</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div id="lab-uri" class="sublab" style="display:none;">
+        <h3>2.1.6 — Aparato urinario</h3>
+        <p>Esta fue la última práctica del semestre y la que más relacioné con mi proyecto de investigación, dado que el riñón concentra buena parte de la fisiopatología metabólica que estudiamos. Identificar el corpúsculo renal con su glomérulo y cápsula de Bowman, así como diferenciar el túbulo contorneado proximal (con borde en cepillo evidente) del distal (luz más amplia, sin borde en cepillo), fue un ejercicio de discriminación fina muy útil para mi razonamiento histológico.</p>
+        <div class="box-row">
+          <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+            <li>Distinguir el túbulo proximal del distal en cortes de corteza renal sin guía previa.</li>
+            <li>Ubicar la mácula densa en el polo vascular del corpúsculo renal.</li>
+          </ul></div>
+          <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+            <li>Esquema comparativo proximal vs. distal (borde en cepillo, tamaño de luz, número de núcleos visibles).</li>
+            <li>Revisión conjunta con la docente de cada estructura señalada en el microscopio antes de avanzar.</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:36px;">Aprendizajes obtenidos</h3>
+      <div class="reflexion">
+        <p>A lo largo de estas seis sesiones de laboratorio aprendí, más que datos aislados, una forma de leer tejidos: partir de la arquitectura general (tipo de epitelio, presencia o ausencia de luz, organización en capas) para luego descender a los detalles celulares específicos de cada órgano. Logré identificar con seguridad las estructuras clave de cada sistema, y comprendí que cada hallazgo microscópico tiene una traducción funcional y, eventualmente, clínica. Esta progresión metodológica fue probablemente la competencia transversal más valiosa que desarrollé en Histología II.</p>
+      </div>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-1-5">← Anterior</button>
+        <button class="pf-btn" data-target="panel-2-2">Siguiente: Patología digestiva →</button>
+      </div>
+    </section>
+
+    <!-- ============ 2.2 ============ -->
+    <section class="panel" id="panel-2-2">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 2.2 · Evidencias del semestre</div>
+      <h2>Informes y presentaciones grupales: patología del tubo digestivo</h2>
+      <p class="panel-sub">Enfermedad celíaca y esófago de Barrett — dos trabajos grupales, una misma lógica: histología normal → transformación patológica.</p>
+
+      <p>Durante el semestre participé en dos trabajos grupales de histopatología digestiva, cada uno con una composición de grupo diferente debido a reorganizaciones de la cátedra. Ambos trabajos comparten una misma lógica metodológica: partir de la histología normal de un órgano del tubo digestivo para luego comprender, por contraste, su transformación patológica.</p>
+
+      <h3>2.2.1 — Enfermedad celíaca (celiaquía)</h3>
+      <p>Junto con mis compañeros de grupo Dyones Cleve, Jerônimo Sperandio y Teresa Bonino (Grupo A), bajo la docencia de la Dra. Patricia Arias Flores, elaboramos un informe histopatológico completo y una presentación titulada <em>"Enfermedad Celíaca (Celiaquía): Remodelación completa del tejido mucoso intestinal"</em>, estructurada en 15 diapositivas que abordaron la tríada etiológica, la arquitectura histológica normal del intestino delgado, la patogenia en dos fases, la tríada histológica diagnóstica, un caso clínico con diagnóstico Marsh IIIa, la correlación histológico-clínica y la conclusión integradora.</p>
+
+      <div class="reflexion">
+        <div class="box-title label">Reflexión personal</div>
+        <p>La premisa central que construimos — que la celiaquía no es una lesión puntual, sino un proceso dinámico de remodelación completa de la mucosa del intestino delgado — cambió fundamentalmente mi forma de entender la histopatología. Antes de este trabajo, pensaba en las enfermedades como estados estáticos; después, comprendí que un corte histológico es una fotografía de un proceso en curso.</p>
+        <p>Desglosar el mecanismo en dos fases —la infiltración del gluten (ingesta → permeabilidad paracelular → presentación antigénica HLA-DQ2/DQ8 → activación de T CD4+) y la cascada de destrucción (tormenta de citocinas IFN-γ y TNF-α → citotoxicidad directa por T CD8+ → respuesta humoral anti-tTG → colapso estructural)— nos exigió integrar inmunología, bioquímica y morfología histológica de forma simultánea.</p>
+      </div>
+
+      <p>La elaboración del caso clínico fue también reveladora: una paciente femenina de 24 años con diarrea crónica de 6 meses, pérdida de 6 kg, distensión abdominal y fatiga, con empeoramiento correlacionado con la ingesta de derivados del trigo. La biopsia de duodeno proximal mostró atrofia vellositaria parcial, hiperplasia de criptas de Lieberkühn e incremento de LIEs (&gt; 25/100 enterocitos), con diagnóstico final de enteropatía celíaca grado <strong>Marsh IIIa</strong>.</p>
+
+      <table class="htable">
+        <tr><th>Hallazgo histológico</th><th>Consecuencia clínica</th></tr>
+        <tr><td>Atrofia vellositaria</td><td>Menor superficie de absorción → diarrea y pérdida de peso</td></tr>
+        <tr><td>Daño en duodeno proximal</td><td>Falla en absorción de hierro y vitamina D → anemia y déficit vitamínico</td></tr>
+      </table>
+
+      <div class="box-row">
+        <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+          <li>Distinción entre los grados de la clasificación de Marsh (especialmente IIIa, IIIb y IIIc): la relación vellosidad/cripta normal (3–5:1) cae a 1:1 o se invierte en grados avanzados.</li>
+          <li>Integrar la "tríada etiológica" (ambiental + genético + inmunológico) como interdependiente.</li>
+          <li>Representar visualmente la cascada de destrucción celular (Fase II).</li>
+          <li>Declarar responsablemente el uso de IA, distinguiendo apoyo estructural de análisis propio.</li>
+        </ul></div>
+        <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+          <li>Lectura primaria de Ross & Pawlina (2020), complementada con Sollid (2002) y artículos recientes de Wang & Wu (2025) y Moscoso & Quera (2015).</li>
+          <li>Uso de NotebookLM para síntesis conceptual inicial, con validación contra el texto original.</li>
+          <li>Trabajo colaborativo presencial para revisar el caso clínico y la coherencia de la correlación.</li>
+          <li>Construcción de una "Matriz de Contraste: Tejido Normal vs. Patológico".</li>
+        </ul></div>
+      </div>
+
+      <h4>Aprendizajes obtenidos</h4>
+      <p>Este trabajo me enseñó que la histopatología no describe estados, sino procesos. La atrofia vellositaria que se observa en el microscopio es el resultado visible de una guerra celular invisible entre linfocitos T y enterocitos. La comprensión de que el IFN-γ destruye el citoesqueleto de actina de los enterocitos —eliminando el borde en cepillo y con él la capacidad absortiva— conectó la bioquímica molecular con la clínica digestiva de una manera que ningún memorizado de definiciones habría logrado.</p>
+
+      <h3>2.2.2 — Esófago de Barrett</h3>
+      <p>Tras una reorganización de los grupos de trabajo de la cátedra, participé en un segundo equipo —junto con Adrín Oxa, Fernanda Banegas, Maysa Rabelo, Rhayana Santana y Rudson Guevara, también bajo la docencia de la Dra. Patricia Arias— en la elaboración de un informe de revisión bibliográfica sobre el Esófago de Barrett, con estructura de artículo científico completa (introducción, objetivos, método, marco teórico, histopatología, fisiopatología, criterios diagnósticos de la AGA, discusión y conclusiones) y 26 referencias en formato Vancouver.</p>
+
+      <div class="reflexion">
+        <div class="box-title label">Reflexión personal</div>
+        <p>Comprender que el Esófago de Barrett es el resultado de una metaplasia adaptativa —donde el epitelio escamoso estratificado normal del esófago se transforma en un epitelio columnar con células caliciformes ante el daño crónico por reflujo gastroesofágico— me obligó a pensar en la histopatología no como un error del organismo, sino como una estrategia de supervivencia tisular que, paradójicamente, incrementa el riesgo de cáncer.</p>
+        <p>Solo la metaplasia intestinal especializada, con sus criptas revestidas de células caliciformes, posee un claro potencial maligno demostrado — lo que la convierte en el verdadero criterio diagnóstico del EB. Comprender la secuencia metaplasia → displasia de bajo grado → displasia de alto grado → adenocarcinoma me permitió visualizar, por primera vez, una secuencia oncológica completa con su correlato histológico en cada etapa.</p>
+      </div>
+
+      <div class="box-row">
+        <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+          <li>Diferenciar los tipos de metaplasia esofágica (cardial, fúndica e intestinal especializada).</li>
+          <li>Comprender simultáneamente la clasificación de Praga y la de París.</li>
+          <li>Mantener el rigor del formato Vancouver con 26 referencias sin duplicar citas.</li>
+          <li>Coordinar el trabajo con un grupo nuevo y otra dinámica de trabajo.</li>
+        </ul></div>
+        <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+          <li>Revisión sistemática en Elsevier, Scopus, PubMed, Scielo y Redalyc.</li>
+          <li>Tablas comparativas de imágenes histológicas (esófago normal vs. Barrett).</li>
+          <li>Discusión grupal de los criterios diagnósticos de la AGA antes de redactar.</li>
+        </ul></div>
+      </div>
+
+      <h4>Aprendizajes obtenidos</h4>
+      <p>Aprendí que la metaplasia, a diferencia de la atrofia vellositaria celíaca, no es una destrucción tisular sino una sustitución adaptativa de un tipo celular por otro, y que esa adaptación puede tener un costo oncológico a largo plazo — un marco conceptual aplicable a otros epitelios del organismo, como el cuello uterino o el epitelio gástrico.</p>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-2-1">← Anterior</button>
+        <button class="pf-btn" data-target="panel-2-5">Siguiente: Flashcards respiratorias →</button>
+      </div>
+    </section>
+
+    <!-- ============ 2.5 ============ -->
+    <section class="panel" id="panel-2-5">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 2.5 · Evidencias del semestre</div>
+      <h2>Flashcards de guía práctica: sistema respiratorio</h2>
+      <p class="panel-sub">Síntesis sin simplificar: del epitelio cilíndrico al plano simple, siguiendo el descenso hasta el alvéolo.</p>
+
+      <p>Como parte de la preparación para las evaluaciones prácticas del semestre, elaboré un conjunto de flashcards histológicas del sistema respiratorio que cubrían tráquea, laringe (cuerdas vocales verdaderas y falsas), bronquios, bronquiolos (terminales y respiratorios), pulmón (conductos alveolares, sacos alveolares y alvéolos con neumocitos tipo I y II), epiglotis y alvéolos. Cada flashcard integraba una imagen microscópica real con localización, características por capas, tipos celulares y función.</p>
+
+      <div class="reflexion">
+        <div class="box-title label">Reflexión personal</div>
+        <p>Al estructurar la información de cada órgano, me di cuenta de que el sistema respiratorio posee una lógica histológica progresiva: a medida que se desciende desde la tráquea hasta los alvéolos, el epitelio va transformándose gradualmente de cilíndrico pseudoestratificado ciliado a cúbico simple y finalmente a plano simple, en paralelo con la progresiva desaparición del cartílago y la reducción del músculo liso.</p>
+        <p>Distinguir que los bronquiolos terminales tienen epitelio cilíndrico pseudoestratificado ciliado que se transforma en cilíndrico simple ciliado, mientras que los bronquiolos respiratorios presentan epitelio cúbico simple con células de Clara, me permitió entender por qué el daño a este nivel —como en el asma bronquial— genera obstrucción al flujo aéreo.</p>
+      </div>
+
+      <p>Comprender que los neumocitos tipo I son responsables del intercambio gaseoso por difusión pasiva, mientras que los neumocitos tipo II producen surfactante, me permitió entender la fisiopatología del síndrome de dificultad respiratoria del recién nacido (SDRRN): la deficiencia de surfactante por inmadurez de los neumocitos tipo II genera colapso alveolar progresivo (atelectasia) — una patología con alta prevalencia en neonatos prematuros en Bolivia.</p>
+      <span class="clinic-tag">Asma bronquial</span><span class="clinic-tag">SDRRN</span>
+
+      <div class="box-row">
+        <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+          <li>La transición de pseudoestratificado ciliado a cúbico simple en bronquiolos terminales, gradual y no siempre evidente.</li>
+          <li>La laringe: cuerdas vocales verdaderas y falsas tienen histología completamente diferente.</li>
+          <li>La epiglotis, con su doble cara epitelial (lingual y laríngea) y su cartílago elástico.</li>
+        </ul></div>
+        <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+          <li>Formato estandarizado: órgano → localización → capas → tipos celulares → función.</li>
+          <li>Imágenes microscópicas reales de las prácticas, junto a la descripción textual.</li>
+          <li>Repetición espaciada, priorizando los órganos con mayor dificultad de identificación.</li>
+        </ul></div>
+      </div>
+
+      <h4>Aprendizajes obtenidos</h4>
+      <p>Aprendí a leer el sistema respiratorio como un continuum histológico-funcional: la tráquea humidifica y filtra, los bronquios conducen, los bronquiolos distribuyen y, finalmente, los alvéolos intercambian. Cada cambio histológico a lo largo de este recorrido tiene una razón funcional precisa.</p>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-2-2">← Anterior</button>
+        <button class="pf-btn" data-target="panel-2-6">Siguiente: Guía práctica de laboratorio →</button>
+      </div>
+    </section>
+
+    <!-- ============ 2.6 ============ -->
+    <section class="panel" id="panel-2-6">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 2.6 · Evidencias del semestre</div>
+      <h2>Llenado de la guía práctica de Histología (laboratorio)</h2>
+      <p class="panel-sub">Un atlas personal construido lámina por lámina, semana tras semana.</p>
+
+      <p>A lo largo de todo el semestre, durante cada sesión de laboratorio, completé de forma sistemática la guía práctica de Histología II: un cuaderno de apoyo institucional en el que se registran, lámina por lámina, las observaciones microscópicas realizadas en clase — identificación del órgano, aumento utilizado, estructuras reconocidas, características morfológicas y correlación funcional.</p>
+
+      <div class="reflexion">
+        <div class="box-title label">Reflexión personal</div>
+        <p>El llenado constante de la guía práctica fue, en retrospectiva, una de las actividades más subestimadas y a la vez más valiosas del semestre. Fue precisamente esa repetición sistemática la que terminó consolidando mi capacidad de reconocimiento histológico en tiempo real, una habilidad que ningún resumen teórico podría haberme dado por sí solo.</p>
+        <p>Al revisar la guía completa al final del semestre, pude notar mi propia progresión: las primeras anotaciones eran más escuetas y mostraban cierta inseguridad en la terminología; las de las últimas semanas eran más precisas, incorporaban correlaciones clínicas que yo mismo añadía espontáneamente y mostraban un vocabulario histológico mucho más fluido.</p>
+      </div>
+
+      <p>Cada sesión tenía una lógica particular: primero la identificación del órgano a bajo aumento, luego el aumento medio, y finalmente el alto aumento. Aprendí a respetar ese orden metodológico, ya que intentar identificar detalles celulares sin primero ubicar la arquitectura general generaba confusión y errores de interpretación.</p>
+
+      <div class="box-row">
+        <div class="box dificultad"><div class="box-title">Dificultades</div><ul>
+          <li>Orientación espacial bajo el microscopio: corte longitudinal vs. transversal.</li>
+          <li>Preparaciones de calidad variable (tinción desigual, artefactos, pliegues del tejido).</li>
+          <li>Mantener la disciplina de completar la guía inmediatamente, sin postergar.</li>
+        </ul></div>
+        <div class="box estrategia"><div class="box-title">Estrategias</div><ul>
+          <li>Llenado inmediato durante la propia sesión, aprovechando la explicación en vivo.</li>
+          <li>Comparación sistemática con atlas (Ross & Pawlina, 2020; Gartner & Hiatt, 2015).</li>
+          <li>Revisión periódica como material de repaso integrado antes de evaluaciones.</li>
+        </ul></div>
+      </div>
+
+      <h4>Aprendizajes obtenidos</h4>
+      <p>Aprendí que el reconocimiento histológico es una habilidad perceptiva que se construye con exposición repetida y deliberada, no con la sola lectura teórica. Esta guía se convirtió en mi propio atlas personalizado, construido con mi letra, mis dudas y mis correcciones.</p>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-2-5">← Anterior</button>
+        <button class="pf-btn" data-target="panel-3-1">Siguiente: Sección 3 — Análisis integrador →</button>
+      </div>
+    </section>
+
+    <!-- ============ 3.1 ============ -->
+    <section class="panel" id="panel-3-1">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 3.1 · Análisis integrador: Histología–Función–Clínica</div>
+      <h2>Hígado: de la arquitectura trabecular a la fisiopatología hepática</h2>
+
+      <div class="subnav-grid" style="margin-bottom:26px;">
+        <button class="subcard" data-target="panel-3-1"><div class="sc-num">3.1</div><div class="sc-title">Hígado</div></button>
+        <button class="subcard" data-target="panel-3-2"><div class="sc-num">3.2</div><div class="sc-title">Páncreas endocrino</div></button>
+        <button class="subcard" data-target="panel-3-3"><div class="sc-num">3.3</div><div class="sc-title">Riñón</div></button>
+        <button class="subcard" data-target="panel-3-4"><div class="sc-num">3.4</div><div class="sc-title">Intestino delgado</div></button>
+        <button class="subcard" data-target="panel-3-5"><div class="sc-num">3.5</div><div class="sc-title">Glándula suprarrenal</div></button>
+      </div>
+
+      <p>El hígado es el órgano metabólico central del organismo. Su arquitectura histológica —hepatocitos dispuestos en trabéculas de una célula de grosor, rodeados por sinusoides hepáticos y drenados por la vena centrolobulillar— no es estética: es funcional. Los hepatocitos de la zona 1 del ácino de Rappaport (periportal) son los más oxigenados y realizan preferentemente gluconeogénesis y oxidación de ácidos grasos; los de la zona 3 (pericentral) son los más vulnerables a la hipoxia y a las toxinas y son el primer sitio de necrosis en la insuficiencia cardíaca congestiva o en la intoxicación por paracetamol.</p>
+
+      <div class="reflexion">
+        <div class="box-title label">La histología no solo describe: diagnostica</div>
+        <p>Esta zonación funcional tiene implicaciones diagnósticas directas: el patrón de necrosis en la biopsia hepática orienta sobre la etiología de la hepatopatía. La necrosis centrolobulillar sugiere isquemia o toxicidad; la necrosis periportal (piecemeal necrosis) sugiere hepatitis autoinmune.</p>
+      </div>
+
+      <p>Además, las células de Kupffer —macrófagos residentes del hígado, ubicados en los sinusoides— son la primera línea de defensa inmunitaria frente a antígenos portales. Su activación crónica por lipopolisacáridos bacterianos contribuye a la progresión de la esteatohepatitis, patología de alta prevalencia en nuestra región dado el sedentarismo y los patrones dietéticos locales.</p>
+
+      <span class="clinic-tag">Necrosis centrolobulillar</span><span class="clinic-tag">Hepatitis autoinmune</span><span class="clinic-tag">Esteatohepatitis</span>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-2-6">← Anterior</button>
+        <button class="pf-btn" data-target="panel-3-2">Siguiente: Páncreas endocrino →</button>
+      </div>
+    </section>
+
+    <!-- ============ 3.2 ============ -->
+    <section class="panel" id="panel-3-2">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 3.2 · Análisis integrador: Histología–Función–Clínica</div>
+      <h2>Páncreas endocrino: de los islotes de Langerhans a la diabetes mellitus</h2>
+
+      <p>Los islotes de Langerhans constituyen apenas el 1–2% del parénquima pancreático en volumen, pero su significancia fisiológica es desproporcionada. Las células beta, que representan aproximadamente el 70% de las células insulares, secretan insulina en respuesta al incremento de glucosa plasmática mediante un mecanismo dependiente del cierre de canales de K⁺ sensibles a ATP y la consecuente despolarización de membrana que activa la exocitosis de gránulos insulínicos.</p>
+
+      <table class="htable">
+        <tr><th>Tipo de diabetes</th><th>Mecanismo histopatológico</th></tr>
+        <tr><td>DM tipo 1</td><td>Destrucción autoinmune selectiva de células beta, mediada por linfocitos T CD8+ en contexto de predisposición HLA</td></tr>
+        <tr><td>DM tipo 2 (más prevalente en Bolivia)</td><td>Resistencia insulínica inicial seguida de agotamiento de células beta, con depósito de amiloide insular (IAPP) identificable histológicamente</td></tr>
+      </table>
+
+      <p>Esta correlación histopatología–clínica es directamente aplicable en la interpretación de biopsias pancreáticas.</p>
+      <span class="clinic-tag">Diabetes mellitus tipo 1</span><span class="clinic-tag">Diabetes mellitus tipo 2</span><span class="clinic-tag">Amiloide insular (IAPP)</span>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-3-1">← Anterior</button>
+        <button class="pf-btn" data-target="panel-3-3">Siguiente: Riñón →</button>
+      </div>
+    </section>
+
+    <!-- ============ 3.3 ============ -->
+    <section class="panel" id="panel-3-3">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 3.3 · Análisis integrador: Histología–Función–Clínica</div>
+      <h2>Riñón: del glomérulo a las nefropatías</h2>
+
+      <p>El glomérulo renal es una estructura de extraordinaria sofisticación histológica. La barrera de filtración glomerular está compuesta por tres capas: el endotelio fenestrado capilar, la membrana basal glomerular (rica en colágeno tipo IV, laminina y fibronectina) y los podocitos con sus pedicelos entrelazados que dejan diafragmas de filtración. Cualquier alteración en la integridad de estas capas genera proteinuria, hematuria o ambas.</p>
+
+      <div class="reflexion">
+        <div class="box-title label">Nefropatía diabética</div>
+        <p>En la nefropatía diabética —la causa más frecuente de insuficiencia renal crónica en Bolivia— se observa histológicamente un engrosamiento de la membrana basal glomerular y una expansión del mesangio, con formación eventual de los <strong>nódulos de Kimmelstiel-Wilson</strong>, que son patognomónicos de la entidad. Este hallazgo en biopsia renal confirma el diagnóstico y orienta el pronóstico.</p>
+      </div>
+
+      <p>La comprensión de la histología del sistema tubular también tiene implicaciones clínicas: la reabsorción de glucosa en el túbulo contorneado proximal mediante el transportador SGLT2 es el mecanismo farmacológico diana de los inhibidores de SGLT2 (flozinas), uno de los grupos de antidiabéticos más importantes en la actualidad. Entender la histología del nefrón es entender la farmacología renal.</p>
+
+      <span class="clinic-tag">Nefropatía diabética</span><span class="clinic-tag">Nódulos de Kimmelstiel-Wilson</span><span class="clinic-tag">Inhibidores de SGLT2</span>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-3-2">← Anterior</button>
+        <button class="pf-btn" data-target="panel-3-4">Siguiente: Intestino delgado →</button>
+      </div>
+    </section>
+
+    <!-- ============ 3.4 ============ -->
+    <section class="panel" id="panel-3-4">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 3.4 · Análisis integrador: Histología–Función–Clínica</div>
+      <h2>Intestino delgado: de las vellosidades a la malabsorción</h2>
+
+      <p>Las vellosidades intestinales son la unidad funcional de la absorción en el intestino delgado. Su revestimiento de enterocitos con microvellosidades (borde en cepillo) y la presencia de células caliciformes, células enteroendocrinas y células de Paneth conforman un epitelio funcionalmente especializado cuya integridad es esencial para la absorción de nutrientes. En la enfermedad celíaca, la inflamación mediada por linfocitos T destruye progresivamente este epitelio, reduciendo la superficie absortiva y generando el síndrome de malabsorción.</p>
+
+      <div class="reflexion">
+        <div class="box-title label">Clasificación de Marsh</div>
+        <p>Permite estadificar el daño histológico: desde el aumento del infiltrado linfocitario intraepitelial (Marsh 1) hasta la atrofia total de vellosidades con hiperplasia compensatoria de criptas (Marsh 3c). Esta gradación tiene correlato clínico directo: los pacientes con Marsh 3c presentan mayor riesgo de complicaciones como linfoma de células T asociado a enteropatía y osteoporosis por malabsorción de calcio y vitamina D.</p>
+      </div>
+
+      <span class="clinic-tag">Enfermedad celíaca</span><span class="clinic-tag">Linfoma asociado a enteropatía</span><span class="clinic-tag">Osteoporosis (malabsorción)</span>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-3-3">← Anterior</button>
+        <button class="pf-btn" data-target="panel-3-5">Siguiente: Glándula suprarrenal →</button>
+      </div>
+    </section>
+
+    <!-- ============ 3.5 ============ -->
+    <section class="panel" id="panel-3-5">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 3.5 · Análisis integrador: Histología–Función–Clínica</div>
+      <h2>Glándula suprarrenal: zonación cortical y correlación clínica</h2>
+
+      <p>La corteza suprarrenal presenta una organización zonal que refleja directamente la especialización funcional. Esta arquitectura no es arbitraria: refleja la maquinaria enzimática diferencial necesaria para la síntesis de cada clase de hormona esteroidea.</p>
+
+      <table class="htable">
+        <tr><th>Zona cortical</th><th>Hormona</th><th>Morfología característica</th></tr>
+        <tr><td>Glomerulosa</td><td>Aldosterona (mineralocorticoides)</td><td>Células dispuestas en ovoides o glomérulos</td></tr>
+        <tr><td>Fasciculada</td><td>Cortisol (glucocorticoides)</td><td>Células claras en columnas paralelas, alto contenido lipídico</td></tr>
+        <tr><td>Reticular</td><td>DHEA (andrógenos suprarrenales)</td><td>Citoplasma compacto y eosinófilo en red anastomosada</td></tr>
+      </table>
+
+      <div class="reflexion">
+        <div class="box-title label">Enfermedad de Addison</div>
+        <p>La destrucción autoinmune de las tres zonas corticales genera la enfermedad de Addison, caracterizada por insuficiencia suprarrenal primaria, hiperpigmentación cutánea (por elevación compensatoria de ACTH y MSH) e hipotensión. La hiperpigmentación tiene su base molecular en la acción de la MSH sobre los melanocitos dérmicos, que histológicamente muestran mayor actividad melanogénica — un ejemplo perfecto de cómo la clínica visible tiene su fundamento en alteraciones histológicas y moleculares precisas.</p>
+      </div>
+
+      <span class="clinic-tag">Enfermedad de Addison</span><span class="clinic-tag">Hiperpigmentación cutánea</span>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-3-4">← Anterior</button>
+        <button class="pf-btn" data-target="panel-4-1">Siguiente: Sección 4 — Reflexión ética →</button>
+      </div>
+    </section>
+
+    <!-- ============ 4.1 ============ -->
+    <section class="panel" id="panel-4-1">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 4.1 · Reflexión ética y profesional</div>
+      <h2>La responsabilidad de interpretar lo que otros no pueden ver</h2>
+
+      <p>Una de las reflexiones más profundas que me generó este semestre fue la toma de conciencia sobre el privilegio epistémico del médico. El paciente que llega con dolor abdominal, ictericia o proteinuria no puede ver lo que ocurre dentro de sus tejidos. El médico sí, o al menos puede interpretarlo a través de los resultados de laboratorio, las imágenes y las biopsias. Esta asimetría de conocimiento genera una responsabilidad ética ineludible.</p>
+
+      <div class="reflexion">
+        <p>Estudiar histología es, en este sentido, un ejercicio ético además de científico. Cada vez que identifico un hallazgo histológico anormal —atrofia de vellosidades, expansión mesangial, necrosis hepatocitaria— estoy desarrollando la capacidad de leer evidencias que, en el futuro, determinarán diagnósticos y tratamientos que afectarán la vida de personas reales. La imprecisión en esa lectura no es un error académico: es un error con consecuencias humanas.</p>
+      </div>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-3-5">← Anterior</button>
+        <button class="pf-btn" data-target="panel-4-2">Siguiente: Honestidad académica →</button>
+      </div>
+    </section>
+
+    <!-- ============ 4.2 ============ -->
+    <section class="panel" id="panel-4-2">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 4.2 · Reflexión ética y profesional</div>
+      <h2>Honestidad académica y uso responsable del conocimiento</h2>
+
+      <p>Este semestre también me confrontó con preguntas sobre honestidad académica en una época de herramientas digitales poderosas. La inteligencia artificial, disponible y accesible, puede generar textos académicamente plausibles en segundos. La tentación de utilizarla como sustituto del aprendizaje real es comprensible, especialmente bajo la presión de múltiples evaluaciones simultáneas.</p>
+
+      <div class="reflexion">
+        <p>Sin embargo, reflexionando sobre las implicaciones de ese atajo, comprendí que el problema no es técnico sino ético: un médico que no sabe histología porque delegó su aprendizaje a una máquina no es solo un estudiante deshonesto, sino un profesional potencialmente peligroso. La honestidad académica no es una norma burocrática: es la garantía de que el conocimiento declarado en un título universitario es real y confiable.</p>
+      </div>
+
+      <p>Por eso, en este portafolio declaro abiertamente el uso de inteligencia artificial como herramienta de organización y apoyo a la redacción preliminar, pero no como sustituto del análisis, la reflexión y el aprendizaje personal que documentan estas páginas.</p>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-4-1">← Anterior</button>
+        <button class="pf-btn" data-target="panel-4-3">Siguiente: Aprendizaje permanente →</button>
+      </div>
+    </section>
+
+    <!-- ============ 4.3 ============ -->
+    <section class="panel" id="panel-4-3">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 4.3 · Reflexión ética y profesional</div>
+      <h2>Compromiso con el aprendizaje permanente</h2>
+
+      <p>La medicina es, por definición, una profesión de aprendizaje continuo. Los conocimientos que adquiero hoy en Histología II serán actualizados, reemplazados o profundizados durante mi carrera. Lo que no cambia es la capacidad de razonamiento, la disciplina de estudio y el compromiso con la excelencia académica.</p>
+
+      <p>Este semestre me enseñó algo que los libros de texto no mencionan explícitamente: que aprender medicina es aprender a tolerar la incertidumbre y seguir trabajando a pesar de ella. No siempre tuve respuestas claras ante lo que veía en el microscopio; no siempre comprendí a la primera la integración entre estructura y función. Pero cada vez que profundicé, cada vez que busqué una referencia adicional o discutí una duda con un compañero, construí un conocimiento más sólido y duradero.</p>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-4-2">← Anterior</button>
+        <button class="pf-btn" data-target="panel-4-4">Siguiente: Histología y justicia sanitaria →</button>
+      </div>
+    </section>
+
+    <!-- ============ 4.4 ============ -->
+    <section class="panel" id="panel-4-4">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 4.4 · Reflexión ética y profesional</div>
+      <h2>La histología como herramienta de justicia sanitaria</h2>
+
+      <p>Finalmente, quiero reflexionar sobre una dimensión que pocas veces se menciona en las clases de histología: su relación con la equidad en salud. En Bolivia, como en muchos países de ingresos medios, el acceso a diagnósticos histopatológicos de calidad no es universal. Muchos pacientes en áreas rurales o periurbanas no tienen acceso a biopsia y estudio patológico, lo que genera subdiagnóstico de enfermedades tratables como la enfermedad celíaca, las hepatopatías crónicas o el linfoma.</p>
+
+      <div class="reflexion">
+        <p>Un médico que comprende profundamente la histología puede compensar parcialmente esa brecha: puede reconocer manifestaciones clínicas que sugieran diagnósticos histopatológicos sin necesidad de biopsia, puede interpretar mejor los escasos estudios disponibles y puede abogar por el acceso a mejores recursos diagnósticos para sus pacientes. La excelencia académica en histología no es solo un logro personal: es una herramienta de justicia sanitaria.</p>
+      </div>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-4-3">← Anterior</button>
+        <button class="pf-btn" data-target="panel-5">Siguiente: Sección 5 — Uso de IA →</button>
+      </div>
+    </section>
+
+    <!-- ============ 5 ============ -->
+    <section class="panel" id="panel-5">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 5 · Uso responsable de inteligencia artificial</div>
+      <h2>Declaración de uso y validación científica</h2>
+      <p class="panel-sub">En cumplimiento de los principios de honestidad académica de la UPDS.</p>
+
+      <h3>5.1 — Declaración de uso</h3>
+      <p>Utilicé herramientas de inteligencia artificial (Claude, de Anthropic) como apoyo en las siguientes dimensiones del trabajo:</p>
+      <ul>
+        <li><strong>Organización estructural del portafolio:</strong> la IA me ayudó a verificar que la estructura propuesta cubría todos los componentes obligatorios establecidos en las instrucciones de la actividad y en la rúbrica de evaluación.</li>
+        <li><strong>Apoyo en redacción preliminar:</strong> en algunos apartados, utilicé la IA para generar borradores iniciales de párrafos que posteriormente reescribí, amplié y validé con fuentes bibliográficas primarias.</li>
+        <li><strong>Síntesis conceptual:</strong> para algunos temas (zonación adrenal, mecanismo molecular de la diabetes, fisiopatología renal), la IA me ayudó a organizar y clarificar conceptos ya trabajados en clase y en la bibliografía.</li>
+      </ul>
+
+      <h3>5.2 — Lo que NO delegué a la IA</h3>
+      <ul>
+        <li>Las reflexiones personales sobre mis experiencias de aprendizaje son auténticas y propias: expresan mis dificultades reales, mis estrategias concretas y mis aprendizajes genuinos durante el semestre.</li>
+        <li>El análisis crítico de los contenidos histológicos y su correlación clínica está fundamentado en mi comprensión personal, desarrollada a través del estudio, las prácticas de laboratorio y la bibliografía especializada.</li>
+        <li>La selección de referencias bibliográficas fue hecha por mí, verificando la calidad y pertinencia de cada fuente.</li>
+      </ul>
+
+      <h3>5.3 — Validación científica del contenido generado con apoyo de IA</h3>
+      <p>Todo contenido generado con apoyo de IA fue sometido a los siguientes procesos de validación antes de su inclusión en el portafolio:</p>
+      <ul>
+        <li>Verificación contra fuentes bibliográficas primarias: Ross & Pawlina (2020), Kumar et al. (2018), Junqueira & Carneiro (2015), Gartner & Hiatt (2015) y artículos científicos especializados.</li>
+        <li>Revisión crítica personal: identifiqué y corregí afirmaciones inexactas, imprecisiones terminológicas o generalizaciones excesivas presentes en los borradores generados por IA.</li>
+        <li>Contextualización local: adapté los contenidos al contexto epidemiológico de Bolivia y de la región de Santa Cruz, lo que la IA por sí misma no puede hacer de manera adecuada.</li>
+      </ul>
+
+      <div class="reflexion">
+        <p>Considero que el uso responsable de la IA en la formación médica es una competencia del siglo XXI que debemos desarrollar críticamente. La IA es una herramienta poderosa, pero no es un sustituto del pensamiento crítico, del razonamiento clínico ni del aprendizaje profundo que exige la medicina. Usarla con criterio, declarando su uso y validando su output, es la única manera ética de integrarla en la práctica académica.</p>
+      </div>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-4-4">← Anterior</button>
+        <button class="pf-btn" data-target="panel-6">Siguiente: Sección 6 — Conclusión →</button>
+      </div>
+    </section>
+
+    <!-- ============ 6 ============ -->
+    <section class="panel" id="panel-6">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 6 · Conclusión</div>
+      <h2>Síntesis de aprendizajes y cierre del portafolio</h2>
+
+      <h3>6.1 — Síntesis de aprendizajes significativos</h3>
+      <p>Al llegar al final de este portafolio, puedo afirmar que el semestre en Histología II representó un punto de inflexión en mi formación médica. No fue solo un semestre de contenidos: fue un semestre de construcción de una nueva forma de pensar la medicina.</p>
+      <ul>
+        <li>La comprensión de que la histología no es anatomía microscópica estática, sino el sustrato dinámico de la función fisiológica y la enfermedad.</li>
+        <li>El desarrollo de la capacidad de correlacionar hallazgos histológicos con cuadros clínicos concretos: atrofia de vellosidades y malabsorción, expansión mesangial y nefropatía diabética, destrucción insular y diabetes mellitus, zonación cortical adrenal e insuficiencia suprarrenal.</li>
+        <li>La adquisición de un vocabulario histológico preciso para interpretar informes de biopsia en años clínicos.</li>
+        <li>El desarrollo de habilidades de razonamiento crítico, síntesis bibliográfica y redacción académica transversales a la medicina.</li>
+        <li>La comprensión del valor del trabajo colaborativo: las discusiones con mis compañeros enriquecieron mi comprensión y me expusieron a perspectivas que no habría alcanzado por mi cuenta.</li>
+      </ul>
+
+      <h3>6.2 — Respuesta al problema de contexto</h3>
+      <p>Este portafolio responde al problema de contexto de la carrera en la medida en que demuestra que los conocimientos histológicos adquiridos durante el semestre tienen aplicabilidad directa en la realidad sanitaria de Bolivia. La diabetes mellitus, la nefropatía crónica, las hepatopatías, la enfermedad celíaca y la insuficiencia suprarrenal son patologías con alta prevalencia en nuestra región, y la comprensión de su base histopatológica es una competencia clínica esencial.</p>
+
+      <div class="reflexion">
+        <p>El médico que trabaje en Santa Cruz de la Sierra, en el oriente boliviano o en cualquier sistema de salud con recursos limitados, necesita no solo saber hacer procedimientos: necesita pensar con profundidad. La Histología II contribuye a ese pensamiento.</p>
+      </div>
+
+      <div class="box-row">
+        <div class="box estrategia"><div class="box-title">6.3 — Fortalezas identificadas</div><ul>
+          <li>Capacidad de correlación histología–función–clínica como habilidad de pensamiento integrado.</li>
+          <li>Hábitos de estudio activo (flashcards, infografías, repetición espaciada) para la consolidación a largo plazo.</li>
+          <li>Producción académica escrita en diferentes formatos: informes, presentaciones, investigación, portafolio reflexivo.</li>
+        </ul></div>
+        <div class="box dificultad"><div class="box-title">6.4 — Aspectos de mejora</div><ul>
+          <li>Velocidad de identificación microscópica en tiempo real, sin apoyo de material de referencia.</li>
+          <li>Integración interdisciplinar (histología–farmacología–fisiopatología–semiología), aún incipiente.</li>
+          <li>Lectura de artículos científicos en inglés: habilidad a fortalecer sistemáticamente.</li>
+        </ul></div>
+      </div>
+
+      <p style="margin-top:24px;">Este portafolio no es el punto final de mi aprendizaje en histología: es el registro del punto de partida. Las competencias que he comenzado a construir este semestre continuarán desarrollándose a lo largo de toda mi carrera y, espero, de toda mi vida profesional como médico.</p>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-5">← Anterior</button>
+        <button class="pf-btn" data-target="panel-7">Siguiente: Referencias →</button>
+      </div>
+    </section>
+
+    <!-- ============ 7 ============ -->
+    <section class="panel" id="panel-7">
+      <div class="panel-eyebrow"><span class="slide-icon"></span> 7 · Referencias bibliográficas</div>
+      <h2>Bibliografía (APA 7.ª edición)</h2>
+      <p class="panel-sub">Ordenadas alfabéticamente por apellido del primer autor.</p>
+
+      <ul class="ref-list">
+        <li>Fogo, A. B. (2011). Causes and pathogenesis of focal segmental glomerulosclerosis. <em>Nature Reviews Nephrology, 7</em>(2), 76–85. https://doi.org/10.1038/nrneph.2010.175</li>
+        <li>Gartner, L. P., & Hiatt, J. L. (2015). <em>Texto atlas de histología</em> (3.ª ed.). McGraw-Hill Interamericana.</li>
+        <li>Junqueira, L. C., & Carneiro, J. (2015). <em>Histología básica</em> (12.ª ed.). Masson.</li>
+        <li>Komatsu, M., Takei, M., Ishii, H., & Sato, Y. (2013). Glucose-stimulated insulin secretion: A newer perspective. <em>Journal of Diabetes Investigation, 4</em>(6), 511–516. https://doi.org/10.1111/jdi.12094</li>
+        <li>Kumar, V., Abbas, A. K., & Aster, J. C. (2018). <em>Robbins. Patología básica</em> (9.ª ed.). Elsevier España.</li>
+        <li>Ludvigsson, J. F., Leffler, D. A., Bai, J. C., Biagi, F., Fasano, A., Green, P. H. R., Hadjivassiliou, M., Kaukinen, K., Kelly, C. P., Leonard, J. N., Lundin, K. E. A., Murray, J. A., Sanders, D. S., Walker, M. M., Zingone, F., & Ciacci, C. (2013). The Oslo definitions for coeliac disease and related terms. <em>Gut, 62</em>(1), 43–52. https://doi.org/10.1136/gutjnl-2011-301346</li>
+        <li>Rinella, M. E. (2015). Nonalcoholic fatty liver disease: A systematic review. <em>JAMA, 313</em>(22), 2263–2273. https://doi.org/10.1001/jama.2015.5370</li>
+        <li>Ross, M. H., & Pawlina, W. (2020). <em>Histología. Texto y atlas</em> (8.ª ed.). Wolters Kluwer.</li>
+        <li>Sollid, L. M. (2002). Coeliac disease: Dissecting a complex inflammatory disorder. <em>Nature Reviews Immunology, 2</em>(9), 647–655. https://doi.org/10.1038/nri885</li>
+        <li>Moscoso, F., & Quera, R. (2015). Enfermedad celíaca: revisión. <em>Revista Médica Clínica Las Condes, 26</em>(5), 613–627. https://doi.org/10.1016/j.rmclc.2015.09.007</li>
+        <li>Que, J., Garman, K. S., Souza, R. F., & Spechler, S. J. (2019). Pathogenesis and cells of origin of Barrett's esophagus. <em>Gastroenterology, 157</em>(2), 349–364. https://doi.org/10.1053/j.gastro.2019.03.072</li>
+        <li>Shaheen, N. J., Falk, G. W., Iyer, P. G., & Gerson, L. B. (2016). ACG clinical guideline: Diagnosis and management of Barrett's esophagus. <em>American Journal of Gastroenterology, 111</em>(1), 30–50. https://doi.org/10.1038/ajg.2015.322</li>
+        <li>Wang, Z., & Wu, Q. (2025). Recent advances in the diagnosis and management of celiac disease. <em>World Journal of Gastroenterology, 31</em>(2), 98114. https://doi.org/10.3748/wjg.v31.i2.98114</li>
+        <li>Universidad Privada Domingo Savio. (2025). <em>Planificación de la asignatura de Histología II</em> [Documento institucional de cátedra]. Facultad de Ciencias de la Salud, Carrera de Medicina.</li>
+        <li>World Health Organization. (2016). <em>Global report on diabetes</em>. World Health Organization. https://www.who.int/publications/i/item/9789241565257</li>
+      </ul>
+
+      <div class="panel-footer-nav">
+        <button class="pf-btn" data-target="panel-6">← Anterior</button>
+        <button class="pf-btn disabled">Fin del portafolio</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  const navItems = document.querySelectorAll('[data-target]');
+  const panels = document.querySelectorAll('.panel');
+  const sidebar = document.getElementById('sidebar');
+  const navToggle = document.getElementById('navToggle');
+  const main = document.getElementById('main');
+
+  function showPanel(id){
+    panels.forEach(p => p.classList.toggle('active', p.id === id));
+    document.querySelectorAll('.nav-item').forEach(b => {
+      b.classList.toggle('active', b.dataset.target === id);
+    });
+    window.scrollTo({top:0, behavior:'smooth'});
+    if(window.innerWidth <= 980){
+      sidebar.classList.remove('open');
+      navToggle.setAttribute('aria-expanded','false');
+    }
+    history.replaceState(null, '', '#' + id.replace('panel-',''));
+  }
+
+  navItems.forEach(btn => {
+    btn.addEventListener('click', () => showPanel(btn.dataset.target));
+  });
+
+  // sub-tabs inside 2.1 (lab sessions)
+  document.querySelectorAll('[data-subtarget]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sublab').forEach(s => s.style.display = 'none');
+      const target = document.getElementById(btn.dataset.subtarget);
+      if(target){
+        target.style.display = 'block';
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+
+  navToggle.addEventListener('click', () => {
+    const open = sidebar.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  // deep-link on load
+  const hash = window.location.hash.replace('#','');
+  if(hash){
+    const id = 'panel-' + hash;
+    if(document.getElementById(id)) showPanel(id);
+  }
+})();
+</script>
+
+</body>
+</html>
